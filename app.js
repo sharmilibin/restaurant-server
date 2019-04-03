@@ -10,6 +10,17 @@ var dishRouter = require('./routes/dishRouter');
 var leaderRouter = require('./routes/leaderRouter');
 var promtionRouter = require('./routes/promotionRouter');
 
+const mongoose = require('mongoose');
+const Dishes = require('./models/dishes');
+
+const url = 'mongodb://localhost:27017/restaurant';
+const connect = mongoose.connect(url);
+
+connect.then((db) => {
+  console.log('connected correctly to the server');
+},(err) => {console.log(err);
+});
+
 
 var app = express();
 
