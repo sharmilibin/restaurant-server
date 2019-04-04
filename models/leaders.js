@@ -9,14 +9,15 @@ const leaderSchema = new Schema({
         required: true,
         unique: true
     },
-    description: {
-        type: String,
-        required: true
-    },
     image: {
         type: String,
         required: true
     },
+    designation: {
+        type: String,
+        required: true
+    },
+    
     abbr: {
         type: String,
         required:true

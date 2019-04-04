@@ -1,5 +1,8 @@
 const express = require('express');
 const bodyParser = require('body-parser');
+const mongoose = require('mongoose');
+const Leaders = require('../models/leaders');
+
 
 const leaderRouter = express.Router();
 leaderRouter.use(bodyParser.json());
@@ -17,7 +20,7 @@ leaderRouter.route('/') // route 1
 .post((req, res, next) => {
   Leaders.create(req.body)
   .then((leaders) => {
-      console.log('Dish Created ', leaders);
+      console.log('leader Created ', leaders);
       res.statusCode = 200;
       res.setHeader('Content-Type', 'application/json');
       res.json(leaders);
@@ -51,7 +54,7 @@ leaderRouter.route('/') // route 1
 })
 .post((req, res, next) => {
     res.statusCode = 403;
-    res.end('POST operation not supported on /dishes/'+ req.params.leaderId);
+    res.end('POST operation not supported on /leader/'+ req.params.leaderId);
 })
 .put((req, res, next) => {
     Leaders.findByIdAndUpdate(req.params.leaderId, {
