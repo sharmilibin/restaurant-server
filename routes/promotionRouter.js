@@ -18,7 +18,7 @@ promotionRouter.route('/') // route 1
    })
 
   .post((req,res,next) => {
-    promotions.create(req.body)
+    Promotions.create(req.body)
     .then((promotions) => {
       console.log('promotions created', promotions);
       res.statusCode = 200;
