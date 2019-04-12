@@ -37,6 +37,7 @@ app.set('view engine', 'jade');
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
+
 app.use(session({
   name: 'session-id',
   secret: '12345-67890-09876-54321',
@@ -92,6 +93,28 @@ app.use('/users', usersRouter);
 app.use('/dishes', dishRouter);
 app.use('/leaders', leaderRouter);
 app.use('/promotions', promtionRouter);
+app.use('/', indexRouter);
+app.use('/users', usersRouter);
+
+function auth (req, res, next) {
+  console.log(req.session);
+
+if(!req.session.user) {
+    var err = new Error('You are not authenticated!');
+    err.status = 403;
+    return next(err);
+}
+else {
+  if (req.session.user === 'authenticated') {
+    next();
+  }
+  else {
+    var err = new Error('You are not authenticated!');
+    err.status = 403;
+    return next(err);
+  }
+}
+}
 
 
 // catch 404 and forward to error handler
