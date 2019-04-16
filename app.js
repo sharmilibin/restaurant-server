@@ -5,6 +5,8 @@ var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 var session = require('express-session');
 var FileStore = require('session-file-store')(session);
+var passport = require('passport');
+var authendicate = require('./sessions/authendicate');
 
 
 var indexRouter = require('./routes/index');
@@ -17,6 +19,7 @@ const mongoose = require('mongoose');
 const Dishes = require('./models/dishes');
 const Promotions = require('./models/promotions');
 const Leaders = require('./models/leaders');
+const Users  = require ('./models/users');
 
 const url = 'mongodb://localhost:27017/restaurant';
 const connect = mongoose.connect(url);
@@ -47,6 +50,8 @@ app.use(session({
 }));
 // app.use(cookieParser('12345-67890-09876-54321'));
 
+app.use(passport.initialize);
+app.use(passport.session);
 
 function auth(req, res, next) {
   console.log(req.session);
@@ -99,21 +104,15 @@ app.use('/users', usersRouter);
 function auth (req, res, next) {
   console.log(req.session);
 
-if(!req.session.user) {
+if(!req.user) {
     var err = new Error('You are not authenticated!');
     err.status = 403;
     return next(err);
 }
 else {
-  if (req.session.user === 'authenticated') {
+
     next();
   }
-  else {
-    var err = new Error('You are not authenticated!');
-    err.status = 403;
-    return next(err);
-  }
-}
 }
 
 
