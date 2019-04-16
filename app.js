@@ -7,7 +7,7 @@ var session = require('express-session');
 var FileStore = require('session-file-store')(session);
 var passport = require('passport');
 var authenticate = require('./sessions/authenticate');
-
+var config = require('./config');
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
@@ -20,8 +20,9 @@ const Dishes = require('./models/dishes');
 const Promotions = require('./models/promotions');
 const Leaders = require('./models/leaders');
 const Users  = require ('./models/users');
+const url = config.mongoUrl;
 
-const url = 'mongodb://localhost:27017/restaurant';
+//const url = 'mongodb://localhost:27017/restaurant';
 const connect = mongoose.connect(url);
 
 connect.then((db) => {
@@ -53,7 +54,7 @@ app.use(session({
 app.use(passport.initialize());
 app.use(passport.session());
 
-function auth(req, res, next) {
+/*function auth(req, res, next) {
   console.log(req.session);
 
   if (!req.session.user) {
@@ -90,7 +91,7 @@ function auth(req, res, next) {
   }
 }
 
-app.use(auth);
+app.use(auth);*/
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
