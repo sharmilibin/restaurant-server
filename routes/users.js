@@ -11,6 +11,7 @@ router.get('/', function(req, res, next) {
   res.send('respond with a resource');
 });
 router.post('/signup', (req, res, next) => {
+  console.log('inside sign up ---', req.body.password);
   User.register(new User({username: req.body.username}),req.body.password, (err,User) =>{
   if(err) {
     res.statusCode = 500;

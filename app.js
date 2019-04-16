@@ -6,7 +6,7 @@ var logger = require('morgan');
 var session = require('express-session');
 var FileStore = require('session-file-store')(session);
 var passport = require('passport');
-var authendicate = require('./sessions/authendicate');
+var authenticate = require('./sessions/authenticate');
 
 
 var indexRouter = require('./routes/index');
@@ -50,8 +50,8 @@ app.use(session({
 }));
 // app.use(cookieParser('12345-67890-09876-54321'));
 
-app.use(passport.initialize);
-app.use(passport.session);
+app.use(passport.initialize());
+app.use(passport.session());
 
 function auth(req, res, next) {
   console.log(req.session);
@@ -105,6 +105,7 @@ function auth (req, res, next) {
   console.log(req.session);
 
 if(!req.user) {
+    console.log(req.user);
     var err = new Error('You are not authenticated!');
     err.status = 403;
     return next(err);
