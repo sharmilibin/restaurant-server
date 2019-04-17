@@ -3,7 +3,7 @@ var router = express.Router();
 const bodyParser = require('body-parser');
 var User = require('../models/users');
 var passport = require('passport');
-var authenticate = require('../authenticate');
+var authenticate = require('../sessions/authenticate');
 router.use(bodyParser.json());
 
 /* GET users listing. */
